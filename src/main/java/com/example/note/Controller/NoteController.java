@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.note.Service.NoteService;
 import com.example.note.dto.NoteDTO;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/request")
 public class NoteController {
@@ -32,7 +34,7 @@ public class NoteController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<?> createNote(@RequestBody NoteDTO noteDTO) {
+	public ResponseEntity<?> createNote(@Valid @RequestBody NoteDTO noteDTO) {
 		logger.info("Creating a new note: {}", noteDTO);
 		NoteDTO created = noteService.create(noteDTO);
 		logger.info("Note created successfully with ID: {}", created.getId());
@@ -40,7 +42,7 @@ public class NoteController {
 	}
 
 	@PatchMapping("/edit/{id}")
-	public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody NoteDTO noteDTO) {
+	public ResponseEntity<?> edit(@Valid @PathVariable Long id, @RequestBody NoteDTO noteDTO) {
 		logger.info("Editing note with ID: {}", id);
 		Optional<NoteDTO> edit = noteService.edit(id, noteDTO);
 		if (edit.isPresent()) {

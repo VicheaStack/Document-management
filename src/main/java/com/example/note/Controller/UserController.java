@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.note.Service.UserService;
 import com.example.note.dto.UserDTO;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -30,7 +32,7 @@ public class UserController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<?> create(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> create(@Valid @RequestBody UserDTO userDTO) {
 		logger.info("Creating user: {}", userDTO);
 		UserDTO created = userService.create(userDTO);
 		logger.info("User created successfully with ID: {}", created.getId());
@@ -38,7 +40,7 @@ public class UserController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> update(@Valid @PathVariable Long id, @RequestBody UserDTO userDTO) {
 		logger.info("Updating user with ID: {}", id);
 		UserDTO updated = userService.update(id, userDTO);
 		logger.info("User updated successfully: {}", updated);
